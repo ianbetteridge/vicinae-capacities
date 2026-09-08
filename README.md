@@ -13,7 +13,7 @@ It talks to the Capacities API 2.0 (`api.capacities.io`) directly, so the Capaci
 | --- | --- |
 | **Quick Thought** | Type the thought as the command argument and hit enter. Appends it to today's daily note. No form. |
 | **Capture Note** | Opens a Markdown text area for longer notes. Appends to today's daily note. |
-| **Create Task** | Form with title, priority, status, date, deadline and Markdown notes. Creates a Task object. |
+| **Create Task** | Form with title, date, deadline, priority, status and Markdown notes. Date and deadline offer Today, Tomorrow, Next week, Next month or a date picker, and you can type to filter them. Creates a Task object. |
 
 Both daily-note commands add a timestamp heading, which is what Capacities does for anything appended via the API. Turn that off in the extension preferences if you prefer.
 
@@ -45,7 +45,7 @@ For development, `npm run dev` watches `src/` and hot-reloads the extension insi
 - Daily note capture calls `POST /blocks/daily-note/append` with `markdown` and the `noTimeStamp` flag. Capacities processes the append asynchronously, so the note may take a moment to show up.
 - Task creation calls `POST /object/markdown` with `structureId: "RootTask"`. Properties go in YAML frontmatter (`title`, `priority`, `status`, `date`, `deadline`), using the option names Capacities documents for the Task type. The body becomes the task's notes.
 - The priority and status dropdowns are populated from `GET /space/structures` so they match the labels in your space. The result is cached for 24 hours because that endpoint allows only 10 requests a minute. If the lookup fails the stock Capacities labels are used.
-- Dates are sent as all-day dates (`YYYY-MM-DD`).
+- Dates are sent as all-day dates (`YYYY-MM-DD`) in your local calendar. "Next week" means the coming Monday and "Next month" the first of next month; the dropdown shows the resolved day next to each option.
 
 Write endpoints allow 30 requests a minute. The extension surfaces rate-limit, bad-token, missing-scope and quota errors as toasts.
 
