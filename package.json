@@ -1,0 +1,79 @@
+{
+  "name": "capacities",
+  "title": "Capacities",
+  "description": "Capture thoughts to your Capacities daily note and create tasks, straight from the launcher.",
+  "icon": "icon.png",
+  "author": "ianbetteridge",
+  "license": "MIT",
+  "categories": ["Productivity"],
+  "keywords": ["capacities", "notes", "daily note", "tasks", "capture", "pkm"],
+  "preferences": [
+    {
+      "name": "apiToken",
+      "type": "password",
+      "title": "API Token",
+      "description": "Generate one in the Capacities desktop app under Settings → Capacities API. Pick the space you want to capture into and grant the api:write scope.",
+      "placeholder": "Capacities API token",
+      "required": true
+    },
+    {
+      "name": "noTimestamp",
+      "type": "checkbox",
+      "title": "Daily note",
+      "label": "Omit the timestamp heading when saving to the daily note",
+      "description": "By default Capacities adds a timestamp heading above each entry appended to the daily note.",
+      "required": false,
+      "default": false
+    }
+  ],
+  "commands": [
+    {
+      "name": "quick-thought",
+      "title": "Quick Thought",
+      "subtitle": "Capacities",
+      "description": "Save a one-line thought to today's daily note without opening a form.",
+      "mode": "no-view",
+      "keywords": ["thought", "daily note", "capture", "jot"],
+      "arguments": [
+        { "name": "text", "type": "text", "placeholder": "Thought", "required": true }
+      ]
+    },
+    {
+      "name": "capture-note",
+      "title": "Capture Note",
+      "subtitle": "Capacities",
+      "description": "Write a longer Markdown note into today's daily note.",
+      "mode": "view",
+      "keywords": ["note", "daily note", "capture", "markdown"],
+      "arguments": [
+        { "name": "text", "type": "text", "placeholder": "Note (optional)", "required": false }
+      ]
+    },
+    {
+      "name": "create-task",
+      "title": "Create Task",
+      "subtitle": "Capacities",
+      "description": "Create a task with priority, date, deadline and notes.",
+      "mode": "view",
+      "keywords": ["task", "todo", "create"],
+      "arguments": [
+        { "name": "title", "type": "text", "placeholder": "Task title (optional)", "required": false }
+      ]
+    }
+  ],
+  "scripts": {
+    "dev": "vici develop",
+    "build": "vici build",
+    "lint": "vici lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@capacities/api": "^1.1.3",
+    "@vicinae/api": "^0.28.1",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  }
+}

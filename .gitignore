@@ -1,0 +1,4 @@
+node_modules/
+dist/
+vicinae-env.d.ts
+.DS_Store
