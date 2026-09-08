@@ -49,6 +49,13 @@ For development, `npm run dev` watches `src/` and hot-reloads the extension insi
 
 Write endpoints allow 30 requests a minute. The extension surfaces rate-limit, bad-token, missing-scope and quota errors as toasts.
 
+## Troubleshooting
+
+- **The commands do not appear after `npm run build`.** Restart Vicinae. See the note in Install above.
+- **"Capacities API error (HTTP 502)" on the first run.** Check the API token first. A mistyped token has been seen to come back from Capacities' gateway as a 502 rather than the 401 you would expect. Fix it under Vicinae Settings → Extensions → Capacities → API Token.
+- **"Capacities rejected the API token" (401) or "Token lacks the api:write scope" (403).** Generate a new token in Capacities under Settings → Capacities API with the api:write scope, and make sure it is for the space you want to capture into.
+- **"Capacities rate limit hit" (429).** Write endpoints allow 30 requests a minute. Wait a minute.
+
 ## Not supported (yet)
 
 - Multiple spaces or switching space per capture.
