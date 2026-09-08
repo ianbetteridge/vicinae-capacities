@@ -36,7 +36,7 @@ npm install
 npm run build
 ```
 
-`npm run build` type-checks, bundles, and copies the extension into Vicinae's extension directory (`~/.local/share/vicinae/extensions/capacities` on Linux, honouring `XDG_DATA_HOME`). Vicinae should pick it up automatically; restart Vicinae if the commands do not appear. Open any of the three commands and paste your API token when prompted.
+`npm run build` type-checks, bundles, and copies the extension into Vicinae's extension directory (`~/.local/share/vicinae/extensions/capacities` on Linux, honouring `XDG_DATA_HOME`). If this is the first extension you have installed from source, **restart Vicinae** afterwards. Vicinae only watches the extensions directory if it existed at startup, so a first install is not noticed until the next launch. Later rebuilds are picked up automatically. Then search for **Quick Thought**, **Capture Note** or **Create Task** and paste your API token when prompted. Searching for "Capacities" also finds them, but the Capacities app itself will rank above them because Vicinae matches the extension name at lower weight than a command title.
 
 For development, `npm run dev` watches `src/` and hot-reloads the extension inside a running Vicinae.
 
