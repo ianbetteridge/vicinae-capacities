@@ -149,9 +149,9 @@ export function describeError(error: unknown): { title: string; message?: string
         return { title: "Object creation quota reached", message: "Capacities is refusing new objects via the API for now." };
       case CapacitiesErrorCode.ServiceUnavailable:
       case CapacitiesErrorCode.ServerError:
-        return { title: "Capacities is unavailable", message: `HTTP ${error.status}. Try again shortly.` };
+        return { title: `Capacities API error (HTTP ${error.status})`, message: serverMessage(error) };
       default:
-        return { title: "Capacities returned an error", message: `${error.code} (HTTP ${error.status})` };
+        return { title: `Capacities returned ${error.code} (HTTP ${error.status})`, message: serverMessage(error) };
     }
   }
   if (error instanceof Error) {
@@ -164,8 +164,18 @@ export function describeError(error: unknown): { title: string; message?: string
   return { title: "Something went wrong" };
 }
 
+/** The server's own message, with any HTML stripped and trimmed to toast length. */
+function serverMessage(error: CapacitiesApiError): string {
+  const raw = (error.message ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  if (!raw || /^(bad gateway|internal server error|service unavailable)$/i.test(raw)) {
+    return "No detail from the server. Check status.capacities.io and try again.";
+  }
+  return raw.length > 160 ? `${raw.slice(0, 157)}...` : raw;
+}
+
 /** Show a failure toast for an error. Vicinae toasts have no action buttons, so the hint lives in the message. */
 export async function showErrorToast(error: unknown): Promise<void> {
+  console.error("[capacities] request failed:", error);
   const { title, message } = describeError(error);
   await showToast({ style: Toast.Style.Failure, title, message });
 }
